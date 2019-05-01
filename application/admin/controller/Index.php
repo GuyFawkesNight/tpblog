@@ -33,4 +33,26 @@ class Index extends Controller
        
         return view();
     }
+
+    public function register(){
+        if(request()->isAjax()){
+            $data= [
+                "username" => input("post.username"),
+                "password" =>input("post.password"),
+                "conpass" =>input("post.conpass"),
+                "nickname" =>input("post.nickname"),
+                "email" =>input("post.email")
+            ];
+
+            $result= model('Admin')->register($data);
+            if($result == 1){
+                 mailto($data["email"],"注册成功","恭喜你注册成功！");
+                return $this->success('注册成功','admin/index/login');
+            }
+            else{
+                return $this->error($result);
+            }
+        }
+        return view();
+    }
 }
