@@ -45,3 +45,7 @@ function mailto($to,$title,$content){
 		exception($mail->ErrorInfo,1001);
 	}
 }
+
+function replace($data){
+    return str_replace('span','a',$data);
+}
