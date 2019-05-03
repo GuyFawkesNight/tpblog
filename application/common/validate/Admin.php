@@ -13,7 +13,8 @@ class Admin  extends Validate{
 		'password|密码'=>'require',
 		'conpass|确认密码'=>'require|confirm:password',
 		'nickname|昵称'=>'require',
-		'email|邮箱'=>'require|email'
+		'email|邮箱'=>'require|email',
+        'code|验证码'=>'require'
 	];
 
 	//登陆验证
@@ -23,8 +24,21 @@ class Admin  extends Validate{
 
 	//注册验证
 	public function sceneRegister(){
-		$this->only(['username','password','conpass','nickname','email'])
-		->append('username','unique:admin');
+		$this->only(['username','password','conpass','nickname'])
+		->append('username','unique:admin')
+            ->append('email','require|email|unique:admin');
+
 	
 	}
+
+	//重置密码邮箱验证
+    public function sceneForget()
+    {
+        $this->only(['email']);
+    }
+
+    public function sceneReset(){
+	    return $this->only(['email','code']);
+    }
+
 }

@@ -34,6 +34,10 @@ class Index extends Controller
         return view();
     }
 
+    /**
+     * 注册
+     * @return \think\response\View|void
+     */
     public function register(){
         if(request()->isAjax()){
             $data= [
@@ -55,4 +59,44 @@ class Index extends Controller
         }
         return view();
     }
+
+    //忘记密码获取验证码
+    public function forget()
+    {
+        if(request()->isAjax())
+        {
+            $adminInfo = model("Admin")
+                ->where(["email"=>input("post.email")])
+                ->find();
+
+            if(!$adminInfo) return $this->error("找不到用户");
+
+            $code = mt_rand(1000,9999);
+
+            session("code",$code);
+            $result = mailto($adminInfo["email"],"重置邮箱验证码","验证码为：".$code);
+
+            if(!$result) return $this->error("验证码邮件发送失败");
+
+            return $this->success("验证码邮件发送成功");
+
+        }
+        return view();
+    }
+
+    //验证码匹配并修改密码
+    public function reset(){
+      $data = [
+          'email' => input('post.email'),
+          'code' =>input('post.code')
+      ];
+
+      $result = model('Admin')->reset($data);
+      if($result != 1) return $this->error("密码重置失败：".$result);
+
+
+      return $this->success("密码重置成功");
+
+    }
+
 }

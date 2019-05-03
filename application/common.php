@@ -18,7 +18,7 @@ function mailto($to,$title,$content){
 
 	try {
 		//Server settings
-		$mail->SMTPDebug = 2;                                       // Enable verbose debug output
+		$mail->SMTPDebug = 0;                                       // Enable verbose debug output
 		$mail->isSMTP();                                            // Set mailer to use SMTP
 		$mail->Host       = 'smtp.163.com';  // Specify main and backup SMTP servers
 		$mail->SMTPAuth   = true;                                   // Enable SMTP authentication
@@ -26,6 +26,7 @@ function mailto($to,$title,$content){
 		$mail->Password   = '1990h10z12t';                               // SMTP password
 		$mail->SMTPSecure = 'ssl';                                  // Enable TLS encryption, `ssl` also accepted
 		$mail->Port       = 587;                                    // TCP port to connect to
+        $mail->CharSet = 'UTF-8';
 	
 		//Recipients
 		$mail->setFrom('hanzttech@163.com','hzt');
