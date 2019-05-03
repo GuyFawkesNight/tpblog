@@ -2,10 +2,18 @@
 
 namespace app\admin\controller;
 
-use think\Controller;
+//use think\Controller;
 
-class Index extends Controller
+
+class Index extends Base
 {
+    //在该控制器的方法调用之前首先执行,避免重复登陆
+    public function initialize()
+    {
+        if(session('?admin.id')){
+            $this->redirect('admin/home/index');
+        }
+    }
     /**
      * 后台登陆
      *

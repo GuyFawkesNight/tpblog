@@ -21,6 +21,15 @@ class Admin extends Model
         $result = $this->where($data)->find();
 
         if($result){
+            if($result["status"] != 1) return "此用户被禁用";
+
+            $sessionData = [
+                'id' =>$result["id"],
+                'nickname' => $result["nickname"],
+                'is_super' => $result['super'],
+                'email'=>$result['email']
+            ];
+            session('admin',$sessionData);
             return 1;
         }
         else{
