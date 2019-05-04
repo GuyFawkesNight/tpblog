@@ -38,4 +38,9 @@ class Artical extends Validate
     {
         $this->only(["id","atop"]);
     }
+
+    public function sceneEdit(){
+        $this->only(["tags","cateid","desc","content"])
+        ->append("title","require");
+    }
 }

@@ -12,6 +12,11 @@ class Artical extends Model
     use SoftDelete;
 
     protected  $table = "dp_article";
+
+
+    public function cate(){
+        return $this->belongsTo('cate','cateid','id');
+    }
     //添加文章
     public function add($data){
         $validate = new \app\common\validate\Artical();
@@ -38,6 +43,29 @@ class Artical extends Model
         $articalInfo->atop = $data["atop"];
         $result = $articalInfo->save();
         if(!$result) return "置顶更新失败";
+
+        return 1;
+    }
+
+
+    public function edit($data)
+    {
+        $validate = new \app\common\validate\Artical();
+        if(!$validate->scene("edit")->check($data))
+            return $validate->getError();
+
+        $articalInfo = $this->find($data["id"]);
+        if(!$articalInfo) return "找不到文章记录";
+
+        $articalInfo["title"] = $data["title"];
+        $articalInfo["tags"] =$data["tags"];
+        $articalInfo["atop"] =$data["atop"];
+        $articalInfo["cateid"] =$data["cateid"];
+        $articalInfo["desc"] =$data["desc"];
+        $articalInfo["content"] =$data["content"];
+
+        $result = $articalInfo->save();
+        if(!$result) return "文章更新失败";
 
         return 1;
     }

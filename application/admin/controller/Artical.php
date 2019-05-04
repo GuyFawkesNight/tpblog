@@ -9,7 +9,8 @@ class Artical extends Base
 
     public function list(){
 
-        $articals = model("artical")->where("delete_time is null")
+        $articals = model("artical")
+            ->with("cate")
             ->order(["atop","create_time"])
             ->paginate(10);
 
@@ -60,5 +61,36 @@ class Artical extends Base
         if($result != 1) return $this->error($result);
 
         return $this->success("置顶更新成功","admin/artical/list");
+    }
+
+    public function edit(){
+        if (request()->isAjax()) {
+
+            $data = [
+                "id"=>input("post.id"),
+                "title"=>input("post.title"),
+                "tags"=>input("post.tags"),
+                "atop"=>input("post.is_top",0),
+                "cateid"=>input("post.cateid"),
+                "desc"=>input("post.desc"),
+                "content"=>input("post.content")
+            ];
+
+            $result = model("artical")->edit($data);
+            if($result != 1) return $this->error($result);
+
+            return $this->success("文章更新成功","admin/artical/list");
+        }
+
+
+        $articalInfo = model("artical")->find(input("id"));
+        $cates = model("cate")->select();
+        $viewData = [
+            "articalInfo"=>$articalInfo,
+            "cates"=>$cates
+        ];
+
+        $this->assign($viewData);
+        return view();
     }
 }

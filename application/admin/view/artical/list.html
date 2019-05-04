@@ -51,7 +51,7 @@
                                     <tr>
                                         <td>{$vo.id}</td>
                                         <td>{$vo.title}</td>
-                                        <td>{$vo.cateid}</td>
+                                        <td>{$vo.cate.catename}</td>
                                         <td>{$vo.atop==0?"未推荐":"已推荐"}</td>
                                         <td>
                                             {if condition="$vo.atop==1"}
@@ -59,7 +59,7 @@
                                             {else /}
                                             <a href="#" class="btn btn-sm btn-azure artical-top" top="{$vo.atop}" dataid="{$vo.id}">推荐</a>
                                             {/if}
-                                            <a href="#" class="btn btn-sm btn-warning">编辑</a>
+                                            <a href="{:url('admin/artical/edit',['id'=>$vo.id])}" class="btn btn-sm btn-warning">编辑</a>
                                             <a href="#" class="btn btn-sm btn-danger">删除</a>
                                         </td>
                                     </tr>

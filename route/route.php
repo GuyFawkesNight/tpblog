@@ -25,4 +25,5 @@ Route::group('admin',function(){
     Route::rule('articallist','admin/artical/list','get');
     Route::rule('articaladd','admin/artical/add','get|post');
     Route::rule('top','admin/artical/top','post');
+    Route::rule('edit/[:id]','admin/artical/edit','get|post');
 });
