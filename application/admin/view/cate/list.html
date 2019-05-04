@@ -44,7 +44,7 @@
                                     {volist name="cates" id="vo"}
                                     <tr>
 
-                                        <td><input type="text" name="sort" value="{$vo.sort}" size="1"></td>
+                                        <td><input type="text" name="sort" dataid="{$vo.id}" value="{$vo.sort}" size="1"></td>
                                         <td>{$vo.catename}</td>
                                         <td>
                                             <a href="#" class="btn btn-azure btn-xs">编辑</a>
@@ -72,10 +72,46 @@
 <script>
     $(function(){
         $(".pagination").addClass("pagination-sm");
+
+        $("input[name=sort]").change(function () {
+
+            var id = $(this).attr("dataid");
+            var val = $(this).val();
+            $.ajax({
+                url:"{:url('admin/cate/sort')}",
+                type:"post",
+                data:{id:id,sort:val},
+                dataType:"json",
+                success:function(data){
+
+                    console.log(data);
+                    if(data != 1){
+                        layer.open({
+                            title:'栏目添加失败',
+                            content:data.msg,
+                            icon:5,
+                            anim:6
+                        })
+
+                        return;
+                    }
+
+                    layer.msg( data.msg,
+                        {
+                            icon:6,time:2000
+                        },
+                        function () {
+                            location.href = data.url;
+                        });
+                }
+            });
+        });
     })
 </script>
 </body>
 <!--  /Body -->
 </html>
+
+
 
 

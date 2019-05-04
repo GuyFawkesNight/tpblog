@@ -8,7 +8,7 @@ class Cate extends Base
 {
     public  function list(){
 
-        $cates = model("Cate")->order('sort','asc')->paginate(1);
+        $cates = model("Cate")->order('sort','asc')->paginate(10);
         $viewData = [
             'cates'=>$cates
         ];
@@ -34,5 +34,17 @@ class Cate extends Base
 
         return view();
 
+    }
+
+    public function sort(){
+        $data = [
+            "id"=>input("post.id"),
+            "sort" =>input("post.sort")
+        ];
+
+        $result = model("cate")->sort($data);
+        if($result != 1) $this->error($result);
+
+        return $this->success("排序更新成功","admin/cate/list");
     }
 }

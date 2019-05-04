@@ -13,6 +13,7 @@ class Cate extends Validate
      * @var array
      */	
 	protected $rule = [
+	    "id|主键"=>"require|unique:cate",
 	    "catename|栏目名称"=> "require|unique:cate",
         "sort|排序"=>"require|number|unique:cate"
 
@@ -28,5 +29,9 @@ class Cate extends Validate
 
     public function sceneAdd(){
         $this->only(["catename","sort"]);
+    }
+
+    public function sceneSort(){
+        $this->only(["id","sort"]);
     }
 }

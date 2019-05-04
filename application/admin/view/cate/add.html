@@ -81,6 +81,8 @@
 
                     console.log(data);
                     if(data.code == 1){
+
+                        console.log(data);
                         layer.msg(
                             data.msg,
                             {
@@ -90,6 +92,7 @@
                             location.href = data.url;
                         });
                     }else{
+                        console.log(data);
                         layer.open({
                             title:'栏目添加失败',
                             content:data.msg,
