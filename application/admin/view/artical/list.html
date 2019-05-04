@@ -60,7 +60,7 @@
                                             <a href="#" class="btn btn-sm btn-azure artical-top" top="{$vo.atop}" dataid="{$vo.id}">推荐</a>
                                             {/if}
                                             <a href="{:url('admin/artical/edit',['id'=>$vo.id])}" class="btn btn-sm btn-warning">编辑</a>
-                                            <a href="#" class="btn btn-sm btn-danger">删除</a>
+                                            <a href="#" class="btn btn-sm btn-danger artical-del" dataid="{$vo.id}">删除</a>
                                         </td>
                                     </tr>
                                     {/volist}
@@ -112,6 +112,33 @@
 
             return false;
         });
+
+        $(".artical-del").click(function () {
+
+            var id = $(this).attr("dataid");
+
+            layer.confirm("确定删除吗？",{title:"删除文章",icon:3},function (index) {
+                layer.close(index);
+                $.ajax({
+                    url:"{:url('admin/artical/delete')}",
+                    type:"post",
+                    dataType:"json",
+                    data:{id:id},
+                    success:function (data) {
+                        if(data.code != 1){
+                            layer.open({title:"文章删除失败",content:data.msg,icon:5,anim:6});
+                            return ;
+                        }
+                        layer.msg(data.msg,{icon:6,time:2000},function(){
+                            location.href=data.url;
+                        })
+
+
+                    }
+                })
+            })
+            return false;
+        })
     })
 </script>
 </body>

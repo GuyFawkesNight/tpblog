@@ -26,4 +26,5 @@ Route::group('admin',function(){
     Route::rule('articaladd','admin/artical/add','get|post');
     Route::rule('top','admin/artical/top','post');
     Route::rule('edit/[:id]','admin/artical/edit','get|post');
+    Route::rule("articaldel",'admin/artical/delete','post');
 });

@@ -93,4 +93,16 @@ class Artical extends Base
         $this->assign($viewData);
         return view();
     }
+
+
+    public function delete(){
+        $articalInfo = model("artical")->find(input("post.id"));
+        if(!$articalInfo) return $this->error("找不到文章记录");
+
+        $result = $articalInfo->delete();
+
+        if(!$result) return $this->error("删除文章失败");
+        return $this->success("删除文章成功","admin/artical/list");
+
+    }
 }

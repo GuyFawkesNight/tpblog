@@ -69,11 +69,14 @@ class Cate extends Base
     }
 
     public function delete(){
-        $cateInfo = model('cate')->find(input('post.id'));
+        //关联删除
+        $cateInfo = model('cate')
+            ->with("artical")
+            ->find(input('post.id'));
 
         if(!$cateInfo) return $this->error("找不到记录");
 
-        $result = $cateInfo->delete();
+        $result = $cateInfo->together("artical")->delete();
         if(!$result) return $this->error("删除失败");
 
         return $this->success("删除成功",'admin/cate/list');

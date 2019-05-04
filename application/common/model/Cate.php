@@ -12,6 +12,11 @@ class Cate extends Model
     protected  $table = "dp_cate";
 
 
+    public function artical(){
+        return $this->hasMany("artical","cateid","id");
+    }
+
+
     public function add($data){
         $validate = new \app\common\validate\Cate();
 
