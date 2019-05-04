@@ -34,4 +34,8 @@ class Cate extends Validate
     public function sceneSort(){
         $this->only(["id","sort"]);
     }
+
+    public function sceneEdit(){
+        $this->only(["catename","sort"]);
+    }
 }

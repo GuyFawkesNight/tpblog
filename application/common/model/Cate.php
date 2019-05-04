@@ -11,6 +11,7 @@ class Cate extends Model
 
     protected  $table = "dp_cate";
 
+
     public function add($data){
         $validate = new \app\common\validate\Cate();
 
@@ -36,6 +37,25 @@ class Cate extends Model
 
         $cateInfo["sort"] = $data["sort"];
         $result = $cateInfo->save();
+        if(!$result) return "更新失败";
+
+        return 1;
+
+
+    }
+
+    public function edit($data){
+        $validate = new \app\common\validate\Cate();
+
+        if(!$validate->scene("edit")->check($data))
+            return $validate->getError();
+
+        $cateInfo = model("cate")->find($data["id"]);
+        if(!$cateInfo) return "找不到记录";
+
+        $cateInfo->catename = $data["catename"];
+        $cateInfo->sort = $data["sort"];
+        $result = $cateInfo->save($data);
         if(!$result) return "更新失败";
 
         return 1;

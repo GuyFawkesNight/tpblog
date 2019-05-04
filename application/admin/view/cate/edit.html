@@ -7,7 +7,7 @@
     <div class="page-container">
 
         <!-- Page Sidebar -->
-       {include file="public/_left" /}
+        {include file="public/_left" /}
         <!-- /Page Sidebar -->
         <!-- Page Content -->
         <div class="page-content">
@@ -33,23 +33,24 @@
                             </div>
                             <div class="widget-body">
                                 <form class="form-horizontal">
+                                    <input type="hidden" name="id" value="{$cateInfo.id}"/>
                                     <div class="form-group">
                                         <label for="catename" class="col-sm-2 control-label no-padding-right">栏目名称</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="catename" name="catename" placeholder="栏目名称" />
+                                            <input type="text" class="form-control" id="catename" name="catename" placeholder="栏目名称" value="{$cateInfo.catename}" />
                                             <p class="help-block">请输入栏目名称</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="cateorder" class="col-sm-2 control-label no-padding-right">排序</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="cateorder" name="cateorder" placeholder="排序" />
+                                            <input type="text" class="form-control" id="cateorder" name="cateorder" placeholder="排序" value="{$cateInfo.sort}" />
                                             <p class="help-block">数字越大，排序靠后</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-primary" id="cateAdd">添加</button>
+                                            <button type="submit" class="btn btn-primary" id="cateSave">保存</button>
                                         </div>
                                     </div>
                                 </form>
@@ -71,14 +72,13 @@
 {include file="public/_js" /}
 <script>
     $(function(){
-        $("#cateAdd").click(function(){
+        $("#cateSave").click(function(){
             $.ajax({
-                url:"{:url('admin/cate/add')}",
+                url:"{:url('admin/cate/edit')}",
                 type:"post",
                 dataType:"json",
                 data:$("form").serialize(),
                 success:function (data) {
-
                     console.log(data);
                     if(data.code == 1){
                         layer.msg(
@@ -87,16 +87,15 @@
                                 icon:6,time:2000
                             },
                             function () {
-                            location.href = data.url;
-                        });
+                                location.href = data.url;
+                            });
                     }else{
                         layer.open({
-                            title:'栏目添加失败',
+                            title:'栏目更新失败',
                             content:data.msg,
                             icon:5,
                             anim:6
-                        })
-
+                        });
                     }
                 }
 
