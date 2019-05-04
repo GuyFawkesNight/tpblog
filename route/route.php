@@ -22,4 +22,7 @@ Route::group('admin',function(){
     Route::rule('sort','admin/cate/sort','post');
     Route::rule('cateedit/[:id]','admin/cate/edit','get|post');
     Route::rule('catedel','admin/cate/delete','post');
+    Route::rule('articallist','admin/artical/list','get');
+    Route::rule('articaladd','admin/artical/add','get|post');
+    Route::rule('top','admin/artical/top','post');
 });
