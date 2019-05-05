@@ -13,11 +13,13 @@ class Member extends Validate
      * @var array
      */	
 	protected $rule = [
-	    'username|用户名'=>'require|unique:member',
+	    'username|用户名'=>'require|unique:member,id',
         'password|密码'=>'require',
         'confirm|确认密码'=>'require|confirm:password',
         'nickname|昵称'=>'require',
-        'email|邮箱'=>'require|email|unique:member'
+        'email|邮箱'=>'require|email|unique:member,id',
+        'oldpassword|老密码'=>'require',
+        'newpassword|新密码'=>'require'
     ];
     
     /**
@@ -31,5 +33,13 @@ class Member extends Validate
 
     public function sceneAdd(){
         $this->only(['username','password','confirm','nickname','email']);
+    }
+
+    public function sceneEdit(){
+        $this->only(["username","nickname","email","oldpassword","newpassword"]);
+
+        //为什么使用append追加的验证会无效呢，例如append("oldpassword","require");
+
+
     }
 }
